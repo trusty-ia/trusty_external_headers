@@ -2,7 +2,7 @@
  * Remote Processor Framework
  *
  * Copyright(c) 2011 Texas Instruments, Inc.
- * Copyright(c) 2011 Google, Inc.
+ * Copyright(c) 2011-2015 Google, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,11 +36,14 @@
 #define REMOTEPROC_H
 
 #include <linux/types.h>
+
+#ifdef __KERNEL__
 #include <linux/klist.h>
 #include <linux/mutex.h>
 #include <linux/virtio.h>
 #include <linux/completion.h>
 #include <linux/idr.h>
+#endif /* __KERNEL__  */
 
 /**
  * struct resource_table - firmware resource table header
@@ -305,6 +308,9 @@ struct fw_rsc_vdev {
 	struct fw_rsc_vdev_vring vring[0];
 } __packed;
 
+
+#ifdef __KERNEL__
+
 /**
  * struct rproc_mem_entry - memory entry descriptor
  * @va:	virtual address
@@ -501,5 +507,7 @@ static inline struct rproc *vdev_to_rproc(struct virtio_device *vdev)
 
 	return rvdev->rproc;
 }
+
+#endif /* __KERNEL__ */
 
 #endif /* REMOTEPROC_H */
